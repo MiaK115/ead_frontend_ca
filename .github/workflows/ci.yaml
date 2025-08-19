@@ -24,9 +24,10 @@ jobs:
           docker build -t $IMAGE .
           docker push $IMAGE
 
-      - name: Trivy scan (fail on HIGH/CRITICAL)
+      - name: Trivy scan
         uses: aquasecurity/trivy-action@0.24.0
         with:
           image-ref: ${{ vars.ACR_NAME }}.azurecr.io/frontend:${{ github.sha }}
           severity: 'HIGH,CRITICAL'
           exit-code: '1'
+          trivyignores: .trivyignore

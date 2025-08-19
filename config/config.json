@@ -1,9 +1,6 @@
 {
-	"development": {
-        "config_id": "development",
-        "app_name": "Recipe Tracker",
-		"webservice_host": "localhost", 
-		"webservice_port": "8080", 
-		"exposedPort": "22137"
-	}
+	"app_name": "Frontend",
+	"exposedPort": 3000,
+	"webservice_host": "recipe-service-recipe-service.app.svc.cluster.local",
+	"webservice_port": 8080
 }
