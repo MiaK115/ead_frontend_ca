@@ -1,26 +1,17 @@
-# ---------- Stage 1: install production deps ----------
+# ---------- Stage 1 ----------
 FROM node:20-alpine AS deps
 WORKDIR /app
-
-# Copy only manifests
 COPY package.json package-lock.json ./
+RUN npm ci --omit=dev \
+ && node -e 'let p=require("./package.json"); delete p.devDependencies; require("fs").writeFileSync("package.runtime.json", JSON.stringify(p,null,2))'
 
-# Install ONLY production deps (honors overrides; no dev deps)
-RUN npm ci --omit=dev
-
-# ---------- Stage 2: runtime ----------
+# ---------- Stage 2 ----------
 FROM node:20-alpine
 WORKDIR /app
 ENV NODE_ENV=production
-
-# Bring in production node_modules only
 COPY --from=deps /app/node_modules ./node_modules
-
-# Copy minimal runtime files (avoid bringing lockfile back in)
-# Add other needed files (e.g., public/, views/, src/ if your server reads them at runtime)
-COPY package.json ./
+COPY --from=deps /app/package.runtime.json ./package.json
 COPY fe-server.js ./
-
 EXPOSE 3000
 USER node
 ENTRYPOINT ["node","fe-server.js"]
