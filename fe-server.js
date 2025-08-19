@@ -3,8 +3,11 @@ var url = require('url');
 const { parse } = require('querystring');
 var fs = require('fs');
 
-//Loading the config fileContents
+// Loading the config file
 const config = require('./config/config.json');
+
+// Make it globally available (as your code expects)
+global.gConfig = config;
 
 
 //Generating some constants to be used to create the common HTML elements.
