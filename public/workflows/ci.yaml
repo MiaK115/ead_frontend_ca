@@ -1,0 +1,32 @@
+name: frontend-ci
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Docker login to ACR
+        run: az acr login --name ${{ vars.ACR_NAME }}
+
+      - name: Build and push frontend image
+        run: |
+          IMAGE=${{ vars.ACR_NAME }}.azurecr.io/frontend:${{ github.sha }}
+          echo "Building $IMAGE"
+          docker build -t $IMAGE .
+          docker push $IMAGE
+
+      - name: Trivy scan (fail on HIGH/CRITICAL)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: ${{ vars.ACR_NAME }}.azurecr.io/frontend:${{ github.sha }}
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1'
