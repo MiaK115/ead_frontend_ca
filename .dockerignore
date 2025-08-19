@@ -1,4 +1,9 @@
 node_modules
-npm-debug.log
-.git
-.github
+    .git
+    .github
+Dockerfile
+    *.md
+package - lock.json
+tests
+__tests__
+coverage
