@@ -11,12 +11,12 @@
   "dependencies": {
     "mongodb": "^3.1.13",
     "request": "^2.81.0",
-    "sinon": "^15.0.4",
     "form-data": "4.0.4"
   },
   "devDependencies": {
     "chai": "^4.3.7",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "sinon": "^15.0.4"
   },
   "overrides": {
     "cross-spawn": "7.0.5",
