@@ -9,11 +9,13 @@ RUN npm ci --omit=dev \
 FROM node:20-alpine
 WORKDIR /app
 ENV NODE_ENV=production
-COPY --from=deps ["/app/node_modules", "./node_modules"]
-COPY --from=deps ["/app/package.runtime.json", "./package.json"]
-COPY ["fe-server.js", "./"]
-COPY ["config", "./config"]
-COPY ["public", "./public"]
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/package.runtime.json ./package.json
+COPY fe-server.js ./
+COPY config ./config
+COPY public ./public
+RUN test -f /app/config/config.json
+RUN test -f /app/public/default.css
 EXPOSE 3000
 USER node
 ENTRYPOINT ["node","fe-server.js"]
