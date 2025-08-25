@@ -91,7 +91,7 @@ http.createServer(function (req, res) {
 	// Always render the list afterward (POST or GET)
 	if (req.method === 'POST') {
 		res.write('<div id="space"></div>');
-		res.write('<div id="logo">New recipe saved successfully TEST! </div>');
+		res.write('<div id="logo">New recipe saved successfully! </div>');
 		res.write('<div id="space"></div>');
 	}
 
