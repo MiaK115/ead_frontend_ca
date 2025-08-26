@@ -19,7 +19,7 @@ jobs:
       matrix:
         language: [ 'javascript-typescript' ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Optional but helps analysis on TS projects; safe for JS too
       - uses: actions/setup-node@v4
