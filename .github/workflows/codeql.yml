@@ -31,14 +31,14 @@ jobs:
           if [ -f pnpm-lock.yaml ]; then npm i -g pnpm && pnpm i --frozen-lockfile || true; fi
           if [ -f yarn.lock ]; then npm i -g yarn && yarn --frozen-lockfile || true; fi
 
-      - uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: security-and-quality
 
       # For JS/TS CodeQL doesn’t need a build, but we include an autobuild for completeness
-      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/autobuild@v4
 
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v4
         with:
           category: "/language:${{ matrix.language }}"
